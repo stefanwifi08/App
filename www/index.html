@@ -10,10 +10,68 @@
     <link rel="stylesheet" href="style.css">
 
     <title>APP Bilder</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+
+
+    var bilder= [
+    'endlos-weite-schwuenge-ueber-perfekt-praeparierte-pisten-ziehen.jpg',
+    'fruehlings-special-top-of-tyrol.jpg',
+    'das-paradies-fuer-wintersportler.jpg',
+    'psst-freeride-geheimtipp-ischgl-relax-if-you-can.jpg'
+
+    ];
+    var aktuell=0;
+
+    var showImage = function( i ) {
+    aktuell += i;
+    if (aktuell<0) aktuell= bilder.length -1;// wieder ans ende
+    if(aktuell> bilder.length -1) aktuell= 0; // wieder zum Anfang
+
+
+    $( '#bilder' ).css({'background-image':'url(tirolbilder/'+bilder[aktuell]+')'});
+    }
+
+    var showNext = function() {
+    // wie übergeben jetzt nur einen Wert nicht den Dateinamen
+    showImage( 1 );
+    }
+
+    var showPrev = function() {
+    showImage( -1);
+    }
+
+    $( document ).on( 'click', '#next', showNext );
+    $( document ).on( 'click', '#prev', showPrev );
+    $(document).ready(function(){
+    showImage(0);
+
+    });
+
+
+
+    var downX=0;
+
+
+    $( document ).on( 'touchstart','#bilder', function(event){
+      downX= event.originalEvent.touches[0].clientX;
+    });
+    $( document ).on( 'touchend','#bilder', function(event){
+    var diffX= downX - event.originalEvent.changedTouches[0].clientX;
+    if (diffX<-1){showImage(1);}
+    if (diffX> 1){showImage(-1);}
+    });
+
+    </script>
+
+
 </head>
 <body>
-    <h1>APP Bilder</h1>
 
+    <div id="bilder">
+    <div id="prev">&lt;</div>
+    <div id="next">&gt;</div>
+    </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script src="jquery-3.3.1.min.js"></script>
     <script src="application.js"></script>
