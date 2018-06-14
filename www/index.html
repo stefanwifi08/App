@@ -32,6 +32,14 @@
     $( '#bilder' ).css({'background-image':'url(tirolbilder/'+bilder[aktuell]+')'});
     }
 
+    var audio = new Audio ('11579635.mp3');
+
+    var playAudio = function(){
+      audio.play();
+    }
+
+
+
     var showNext = function() {
     // wie übergeben jetzt nur einen Wert nicht den Dateinamen
     showImage( 1 );
@@ -41,8 +49,10 @@
     showImage( -1);
     }
 
-    $( document ).on( 'click', '#next', showNext );
-    $( document ).on( 'click', '#prev', showPrev );
+
+
+    $( document ).on( 'click', '#next', showNext, playAudio);
+    $( document ).on( 'click', '#prev', showPrev, playAudio);
     $(document).ready(function(){
     showImage(0);
 
@@ -60,7 +70,10 @@
     var diffX= downX - event.originalEvent.changedTouches[0].clientX;
     if (diffX<-1){showImage(1);}
     if (diffX> 1){showImage(-1);}
+    downX=0;
+
     });
+
 
     </script>
 
@@ -72,6 +85,11 @@
     <div id="prev">&lt;</div>
     <div id="next">&gt;</div>
     </div>
+<!-->
+    <audio id="audio">
+     <source src="11579635.mp3" >
+    </audio>
+<-->
     <script type="text/javascript" src="cordova.js"></script>
     <script src="jquery-3.3.1.min.js"></script>
     <script src="application.js"></script>
